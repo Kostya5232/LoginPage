@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="style.css" />
+        <title>Форма авторизации</title>
+    </head>
+    <body>
+        <form id="loginForm">
+            <input type="text" id="email" placeholder="Логин (email)" />
+            <input type="password" id="password" placeholder="Пароль" />
+            <button type="button" id="loginButton">Войти</button>
+            <div id="error" class="error"></div>
+        </form>
+        <script>
+            document.getElementById("loginButton").addEventListener("click", (event) => {
+                validateForm();
+            });
+            const validateForm = () => {
+                const email = document.getElementById("email").value.trim();
+                const password = document.getElementById("password").value.trim();
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                const passwordPattern = /^[a-zA-Z0-9]{6,20}$/;
+                const errorElement = document.getElementById("error");
+                if (email !== "" || password !== "") {
+                    if (emailPattern.test(email)) {
+                        if (passwordPattern.test(password)) {
+                            window.location.href = `index.html?email=${email}&password=${password}`;
+                            return;
+                        }
+                        errorElement.innerText = "Пароль должен содержать только латинские буквы и цифры, длиной от 6 до 20 символов.";
+                        return;
+                    }
+                    errorElement.innerText = "Логин должен быть в формате email.";
+                    return;
+                }
+                errorElement.innerText = "Логин и пароль должны быть указаны.";
+                return;
+            };
+        </script>
+    </body>
+</html>
