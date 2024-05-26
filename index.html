@@ -21,15 +21,19 @@
                 const email = document.getElementById("email").value.trim();
                 const password = document.getElementById("password").value.trim();
                 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                const passwordPattern = /^[a-zA-Z0-9]{6,20}$/;
+                const passwordPattern = /^[a-zA-Z0-9]+$/;
                 const errorElement = document.getElementById("error");
                 if (email !== "" || password !== "") {
                     if (emailPattern.test(email)) {
                         if (passwordPattern.test(password)) {
-                            window.location.href = `index.html?email=${email}&password=${password}`;
+                            if (password.length >= 6 && password.length <= 20) {
+                                window.location.href = `index.html?email=${email}&password=${password}`;
+                                return;
+                            }
+                            errorElement.innerText = "Пароль должен быть длиной от 6 до 20 символов.";
                             return;
                         }
-                        errorElement.innerText = "Пароль должен содержать только латинские буквы и цифры, длиной от 6 до 20 символов.";
+                        errorElement.innerText = "Пароль должен содержать только латинские буквы и цифры";
                         return;
                     }
                     errorElement.innerText = "Логин должен быть в формате email.";
